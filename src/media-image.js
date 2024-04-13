@@ -1,4 +1,4 @@
-import { html, css } from 'lit';
+import {LitElement, html, css} from 'lit';
 import { DDD } from "@lrnwebcomponents/d-d-d/d-d-d.js";
 
 // Singleton for managing the content in the body and listening for media-image tags
@@ -15,11 +15,22 @@ export const MediaImageManagerStore = globalThis.MediaImageManager.requestAvaila
 
 // media-image web component
 export class mediaImage extends DDD {
-  static get styles() {
-    return css`
-      /* Add your styles here */
-    `;
-  }
+
+    static get styles() {
+        return [
+          super.styles,
+          css`
+          :host {
+            display: block;
+          }
+          .my-div {
+            padding: var(-ddd-spacing-5);
+            margin: var(--ddd-spacing-2) var(--ddd-spacing-0);
+            color: var(--ddd-theme-default-keystoneYellow);
+          }
+        `];
+    }
+
 
   static get properties() {
     return {
