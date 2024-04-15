@@ -44,16 +44,42 @@
 
 </html>  -->
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <h1>media-image</h1>
+  <title>media-image</title>
   <script type="module" src="src/media-image.js"></script>
+  <style>
+    /* Add some padding to the body to prevent the images from touching the edges of the screen */
+    body {
+      padding: 20px;
+      border: 5px solid black;
+    }
+  </style>
 </head>
 <body>
-  <media-image source="images/beaver.png" caption="Beaver" description="A beaver in the wild."></media-image>
+  <h1>media-image</h1>
+  <media-image source="images/beaver.png" caption="Beaver"></media-image>
+  <p>this is where text goes too</p>
+  <media-image source="images/oldMain.png" caption="oldMain"></media-image>
+  <p>text can go here too.</p>
+  <script>
+    window.addEventListener('DOMContentLoaded', async () => {
+      // Wait for all media-image elements to finish upgrading
+      const mediaImages = Array.from(document.querySelectorAll('media-image'));
+      await Promise.all(mediaImages.map(img => customElements.whenDefined('media-image')));
+      // Get all media-image elements and add their sources and captions to the images and captions arrays
+      const images = mediaImages.map(img => img.source);
+      const captions = mediaImages.map(img => img.caption);
+      // Set the images and captions properties of each media-image element to the images and captions arrays
+      mediaImages.forEach(img => {
+        img.images = images;
+        img.captions = captions;
+      });
+      console.log('Page has loaded. Images:', images);
+    });
+  </script>
 </body>
-</html> 
+</html>
