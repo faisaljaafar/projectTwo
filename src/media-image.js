@@ -94,23 +94,29 @@ export class mediaImage extends LitElement {
     }
   
     firstUpdated() {
-        this.shadowRoot.querySelector('img').addEventListener('click', () => this.openLightbox());
-        console.log('Page has loaded. Images:', this.images);
+      this.shadowRoot.querySelector('img').addEventListener('click', () => this.openLightbox());
+      this.shadowRoot.querySelector('.close').addEventListener('click', () => this.closeLightbox());
+      console.log('Page has loaded. Images:', this.images);
+    }
+  
+    openLightbox() {
+      this.shadowRoot.querySelector('.lightbox').style.display = 'block';
+      console.log('Image clicked. Images:', this.images);
+    }
+  
+    closeLightbox() {
+      this.shadowRoot.querySelector('.lightbox').style.display = 'none';
+      console.log('Lightbox closed. Images:', this.images);
+    }
+  
+    nextImage() {
+      let index = this.images.indexOf(this.source);
+      if (index < this.images.length - 1) {
+        this.source = this.images[index + 1];
+        this.caption = this.captions[index + 1];
       }
-    
-      openLightbox() {
-        this.shadowRoot.querySelector('.lightbox').style.display = 'block';
-        console.log('Image clicked. Images:', this.images);
-      }
-    
-      nextImage() {
-        let index = this.images.indexOf(this.source);
-        if (index < this.images.length - 1) {
-          this.source = this.images[index + 1];
-          this.caption = this.captions[index + 1];
-        }
-        console.log('Next button clicked. Images:', this.images);
-      }
+      console.log('Next button clicked. Images:', this.images);
+    }
     
       prevImage() {
         let index = this.images.indexOf(this.source);
