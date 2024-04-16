@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-//import { DDD } from "@lrnwebcomponents/d-d-d/d-d-d.js";
+import { DDD } from "@lrnwebcomponents/d-d-d/d-d-d.js";
 
 // Singleton for managing the content in the body and listening for media-image tags
 globalThis.MediaImageManager = globalThis.MediaImageManager || {};
@@ -14,7 +14,7 @@ globalThis.MediaImageManager.requestAvailability = () => {
 export const MediaImageManagerStore = globalThis.MediaImageManager.requestAvailability();
 
 // media-image web component
-export class mediaImage extends LitElement {
+export class mediaImage extends DDD {
     static get styles() {
       return css`
         :host {
