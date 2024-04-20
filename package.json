@@ -16,6 +16,8 @@
   },
   "dependencies": {
     "@lrnwebcomponents/d-d-d": "^8.0.2",
+    "@lrnwebcomponents/play-list": "^8.0.2",
+    "@lrnwebcomponents/simple-icon": "^8.0.2",
     "lit": "^3.1.2"
   },
   "devDependencies": {

@@ -56,6 +56,7 @@
     body {
       padding: 20px;
       border: 5px solid black;
+      background-color: grey;
     }
   </style>
 </head>
@@ -66,18 +67,36 @@
   <media-image source="images/oldMain.png" caption="oldMain"></media-image>
   <p>text can go here too.</p>
   <script>
-    window.addEventListener('DOMContentLoaded', async () => {
-      // Wait for all media-image elements to finish upgrading
-      const mediaImages = Array.from(document.querySelectorAll('media-image'));
-      await Promise.all(mediaImages.map(img => customElements.whenDefined('media-image')));
+    // Define the MediaImageManager singleton
+    window.MediaImageManager = window.MediaImageManager || {};
+    window.MediaImageManager.instance = null;
+    window.MediaImageManager.requestAvailability = () => {
+      if (!window.MediaImageManager.instance) {
+        window.MediaImageManager.instance = document.createElement("media-image-manager");
+        document.body.appendChild(window.MediaImageManager.instance);
+      }
+      return window.MediaImageManager.instance;
+    };
+
+    // Wait for all media-image elements to finish upgrading
+    const mediaImages = Array.from(document.querySelectorAll('media-image'));
+    Promise.all(mediaImages.map(img => customElements.whenDefined('media-image'))).then(() => {
       // Get all media-image elements and add their sources and captions to the images and captions arrays
       const images = mediaImages.map(img => img.source);
       const captions = mediaImages.map(img => img.caption);
+
       // Set the images and captions properties of each media-image element to the images and captions arrays
       mediaImages.forEach(img => {
         img.images = images;
         img.captions = captions;
       });
+
+      // Get the first media-image element and set its source and caption to the first image and caption in the arrays
+      const firstImage = mediaImages[0];
+      firstImage.source = images[0];
+      firstImage.caption = captions[0];
+
+      // Log the images array after it has been populated
       console.log('Page has loaded. Images:', images);
     });
   </script>
