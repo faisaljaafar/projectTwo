@@ -8,15 +8,24 @@ class MediaImage extends DDD {
       :host {
         display: block;
         width: 100%;
-        max-width: 300px;
-        background: black;
-        border: 5px solid green;
+        max-width: 600px;
         box-sizing: border-box;
         position: relative;
       }
       img {
         width: 100%;
         height: auto;
+        border: solid 8px green;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all ease-in .3s;
+        display: inherit;
+        margin: 32px 0;
+        transition: all .3 ease-in;
+      }
+      img:hover {
+        transform: translate(8px, -8px);
+        box-shadow: -8px 8px #000;
       }
     `;
   }
@@ -132,7 +141,7 @@ class MediaImage extends DDD {
     prevButton.style.position = 'absolute';
     prevButton.style.top = '50%';
     prevButton.style.left = '20px';
-    prevButton.style.background = 'transparent';
+    prevButton.style.background = 'black';
     prevButton.style.border = 'none';
     prevButton.style.fontSize = '24px';
     prevButton.style.color = 'white';
@@ -150,7 +159,7 @@ class MediaImage extends DDD {
     nextButton.style.position = 'absolute';
     nextButton.style.top = '50%';
     nextButton.style.right = '20px';
-    nextButton.style.background = 'transparent';
+    nextButton.style.background = 'black';
     nextButton.style.border = 'none';
     nextButton.style.fontSize = '24px';
     nextButton.style.color = 'white';
