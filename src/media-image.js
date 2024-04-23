@@ -18,44 +18,6 @@ class MediaImage extends DDD {
         width: 100%;
         height: auto;
       }
-      .close-button {
-        position: absolute;
-        top: 0;
-        right: 0;
-        background: none;
-        border: none;
-        font-size: 24px;
-        color: white;
-        cursor: pointer;
-      }
-      .navigation-buttons {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: rgba(0, 0, 0, 0.5);
-        padding: 10px;
-      }
-      .navigation-buttons button {
-        background: none;
-        border: none;
-        font-size: 24px;
-        color: white;
-        cursor: pointer;
-      }
-      .slideshow {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px;
-        background: rgba(0, 0, 0, 0.5);
-      }
-      .slideshow .caption {
-        color: white;
-      }
     `;
   }
 
@@ -81,15 +43,6 @@ class MediaImage extends DDD {
   render() {
     return html`
       <img src="${this.source}" alt="${this.caption}">
-      <button class="close-button" @click="${this.closePlaylist}">×</button>
-      <div class="navigation-buttons">
-        <button class="prev-button" @click="${this.prevImage}">&lt;</button>
-        <div class="slideshow">
-          <span class="image-number">${this.currentImageIndex + 1}/${this.images.length}</span>
-          <span class="caption">${this.caption}</span>
-        </div>
-        <button class="next-button" @click="${this.nextImage}">&gt;</button>
-      </div>
       <play-list id="playlist"></play-list>
     `;
   }
@@ -100,10 +53,6 @@ class MediaImage extends DDD {
 
   firstUpdated() {
     this.shadowRoot.querySelector('img').addEventListener('click', () => this.openPlaylist());
-    this.shadowRoot.querySelector('.close-button').addEventListener('click', () => this.closePlaylist());
-    this.shadowRoot.querySelector('.next-button').addEventListener('click', () => this.nextImage());
-    this.shadowRoot.querySelector('.prev-button').addEventListener('click', () => this.prevImage());
-    console.log('Page has loaded. Images:', this.images);
   }
 
   openPlaylist() {
@@ -229,40 +178,6 @@ class MediaImage extends DDD {
       popup.remove();
     });
     popup.appendChild(closeButton);
-  }
-
-  closePlaylist() {
-    const popupWindow = window.open('', '_blank');
-    popupWindow.close();
-  }
-
-  nextImage() {
-    this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
-    this.source = this.images[this.currentImageIndex];
-    this.caption = this.captions[this.currentImageIndex];
-    this.updateSlideshow();
-    this.updateCounter();
-  }
-  
-  prevImage() {
-    this.currentImageIndex = (this.currentImageIndex - 1 + this.images.length) % this.images.length;
-    this.source = this.images[this.currentImageIndex];
-    this.caption = this.captions[this.currentImageIndex];
-    this.updateSlideshow();
-    this.updateCounter();
-  }
-  
-  updateCounter() {
-    const counter = document.querySelector('.counter');
-    counter.innerText = `${this.currentImageIndex + 1}/${this.images.length}`;
-  }
-
-  updateSlideshow() {
-    const slideshow = this.shadowRoot.querySelector('.slideshow');
-    slideshow.innerHTML = `
-      <span class="image-number">${this.currentImageIndex + 1}/${this.images.length}</span>
-      <span class="caption">${this.caption}</span>
-    `;
   }
 }
 
