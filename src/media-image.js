@@ -34,6 +34,7 @@ class MediaImage extends DDD {
     return {
       source: { type: String },
       caption: { type: String },
+      description: { type: String }, // Added description property
       images: { type: Array },
       captions: { type: Array },
       currentImageIndex: { type: Number }
@@ -44,6 +45,7 @@ class MediaImage extends DDD {
     super();
     this.source = '';
     this.caption = '';
+    this.description = '';  // Initialize description as empty string
     this.images = [];
     this.captions = [];
     this.currentImageIndex = 0;
@@ -52,7 +54,7 @@ class MediaImage extends DDD {
   render() {
     return html`
       <img src="${this.source}" alt="${this.caption}">
-      <play-list id="playlist"></play-list>
+      <p class="description">${this.description}</p>
     `;
   }
 
@@ -106,13 +108,14 @@ class MediaImage extends DDD {
   
     const caption = document.createElement('div');
     caption.style.position = 'absolute';
-    caption.style.bottom = '0';
-    caption.style.left = '0';
-    caption.style.right = '0';
+    caption.style.bottom = '5';
+    caption.style.left = '5';
+    caption.style.right = '5';
     caption.style.background = 'black';
+    caption.style.color = 'white';
     caption.style.padding = '10px';
     caption.style.textAlign = 'center';
-    caption.innerText = this.captions[this.currentImageIndex];
+    caption.innerText = `${this.captions[this.currentImageIndex]} - ${this.description}`;
     slideshow.appendChild(caption);
   
     const thumbnails = document.createElement('div');
@@ -137,6 +140,7 @@ class MediaImage extends DDD {
       });
       thumbnails.appendChild(thumbnail);
     });
+
     const prevButton = document.createElement('button');
     prevButton.style.position = 'absolute';
     prevButton.style.top = '50%';

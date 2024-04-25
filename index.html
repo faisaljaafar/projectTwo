@@ -58,13 +58,18 @@
       border: 5px solid black;
       background-color: grey;
     }
+    .description {
+      margin-top: 10px;
+      font-style: italic;
+    }
   </style>
 </head>
 <body>
   <h1>media-image</h1>
-  <media-image source="images/beaver.png" caption="Beaver"></media-image>
+  <media-image source="images/beaver.png" caption="Beaver" description="This is a description of the beaver image"></media-image>
   <p>this is where text goes too</p>
-  <media-image source="images/oldMain.png" caption="oldMain"></media-image>
+  
+  <media-image source="images/oldMain.png" caption="oldMain" description="This is a description of the oldMain image"></media-image>
   <p>text can go here too.</p>
   <script>
     // Define the MediaImageManager singleton
