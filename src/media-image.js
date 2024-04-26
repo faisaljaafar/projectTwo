@@ -1,197 +1,157 @@
-import { html, css } from 'lit';
+import { html, css } from "lit";
 import { DDD } from "@lrnwebcomponents/d-d-d/d-d-d.js";
-import '@lrnwebcomponents/play-list/play-list.js';
 
-class MediaImage extends DDD {
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-        width: 100%;
-        max-width: 600px;
-        box-sizing: border-box;
-        position: relative;
-      }
-      img {
-        width: 100%;
-        height: auto;
-        border: solid 8px green;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: all ease-in .3s;
-        display: inherit;
-        margin: 32px 0;
-        transition: all .3 ease-in;
-      }
-      img:hover {
-        transform: translate(8px, -8px);
-        box-shadow: -8px 8px #000;
-      }
-    `;
-  }
+export class MediaImage extends DDD {
 
-  static get properties() {
-    return {
-      source: { type: String },
-      caption: { type: String },
-      description: { type: String }, // Added description property
-      images: { type: Array },
-      captions: { type: Array },
-      currentImageIndex: { type: Number }
-    };
+  static get tag() {
+    return 'media-image';
   }
 
   constructor() {
     super();
-    this.source = '';
-    this.caption = '';
-    this.description = '';  // Initialize description as empty string
-    this.images = [];
-    this.captions = [];
-    this.currentImageIndex = 0;
+    this.source = "https://assets-global.website-files.com/648b07b602810d848d5617a5/64a5856733c97c2d2457e7ad_6234f0e17e979159359bd9e6_Designership-Shipfaster-UI-Design-System-4%2520(1).png";
+    this.caption = "Temp"
+    this.description = "Temp temp temp temp"
+    this.altText = "temp alt text";
+    this.primary = "green";
+    this.secondary = "black";
   }
 
-  render() {
-    return html`
-      <img src="${this.source}" alt="${this.caption}">
-      <p class="description">${this.description}</p>
+  static get styles() {
+
+    return css`
+
+      :host([primary="green"]) {
+        --background-color: var(--ddd-theme-default-opportunityGreen);
+      }
+      :host([primary="red"]) {
+        --background-color: var(--ddd-theme-default-original87Pink);
+      }
+      :host([primary="blue"]) {
+        --background-color: var(--ddd-theme-default-beaverBlue);
+      }
+      :host([primary="black"]) {
+        --background-color: #000;
+      }
+
+      :host([secondary="green"]) {
+        --border-color: var(--ddd-theme-default-opportunityGreen);
+      }
+      :host([secondary="red"]) {
+        --border-color: var(--ddd-theme-default-original87Pink);
+      }
+      :host([secondary="blue"]) {
+        --border-color: var(--ddd-theme-default-beaverBlue);
+      }
+      :host([secondary="black"]) {
+        --border-color: #000;
+      }
+
+      :host {
+        margin: 25px;
+      }
+
+      .background {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: .15rem solid var(--border-color, var(--ddd-theme-default-coalyGray));
+        border-radius: 8px;
+        width: var(--width, 650px);
+        height: var(--height, 350px);
+        padding: 1%;
+        background-color: var(--background-color);
+      }
+
+      .background:hover {
+        transform: translate(8px,-8px);
+        box-shadow: -8px 8px var(--border-color);
+        transition: .5s;
+      }
+
+      img {
+        width: var(--image-width, 80%);
+        height: var(--image-height, 85%);
+        border: .15rem solid var(--border-color, var(--ddd-theme-default-coalyGray));
+        border-radius: 8px;
+      }
+
+      .caption {
+        height: 13%;
+        padding: 2% 0;
+        margin: 0;
+        font-size: 25px;
+        color: var(--caption-color, var(--ddd-theme-default-slateMaxLight))
+      }
+
     `;
   }
 
-  static get tag() {
-    return "media-image";
+//   openPlaylist() {
+//       const evt = new CustomEvent("toggle-play-list", {
+//         bubbles: true,
+//         composed: true,
+//         cancelable: true,
+//         detail: {
+//         opened: true,
+//         invokedBy: this.invokedBy,
+//       },
+//     });
+//     this.dispatchEvent(evt);
+//   }
+
+openPlaylist() {
+    const evt = new CustomEvent("toggle-play-list", {
+      bubbles: true,
+      composed: true,
+      cancelable: true,
+      detail: {
+        opened: true,
+        invokedBy: this,
+      },
+    });
+    this.dispatchEvent(evt);
   }
 
-  firstUpdated() {
-    this.shadowRoot.querySelector('img').addEventListener('click', () => this.openPlaylist());
+  addToModal() {
+//such emptiness.
   }
 
-  openPlaylist() {
-    const popup = document.createElement('div');
-    popup.style.position = 'fixed';
-    popup.style.top = '0';
-    popup.style.left = '0';
-    popup.style.width = '100%';
-    popup.style.height = '100%';
-    popup.style.background = 'rgba(0, 0, 0, 0.5)';
-    popup.style.zIndex = '9999';
-    popup.style.display = 'flex';
-    popup.style.justifyContent = 'center';
-    popup.style.alignItems = 'center';
-    document.body.appendChild(popup);
-  
-    const counter = document.createElement('div');
-    counter.style.position = 'absolute';
-    counter.style.top = '20px';
-    counter.style.left = '20px';
-    counter.style.background = 'black';
-    counter.style.padding = '5px 10px';
-    counter.style.borderRadius = '5px';
-    counter.innerText = `${this.currentImageIndex + 1}/${this.images.length}`;
-    popup.appendChild(counter);
-  
-    const slideshow = document.createElement('div');
-    slideshow.style.width = '100%';
-    slideshow.style.maxWidth = '800px';
-    slideshow.style.height = '500px';
-    slideshow.style.position = 'relative';
-    slideshow.style.marginTop = '50px';
-    slideshow.style.marginBottom = '20px';
-    popup.appendChild(slideshow);
-  
-    const img = document.createElement('img');
-    img.src = this.images[this.currentImageIndex];
-    img.style.maxWidth = '100%';
-    img.style.maxHeight = '100%';
-    img.style.objectFit = 'contain';
-    slideshow.appendChild(img);
-  
-    const caption = document.createElement('div');
-    caption.style.position = 'absolute';
-    caption.style.bottom = '5';
-    caption.style.left = '5';
-    caption.style.right = '5';
-    caption.style.background = 'black';
-    caption.style.color = 'white';
-    caption.style.padding = '10px';
-    caption.style.textAlign = 'center';
-    caption.innerText = `${this.captions[this.currentImageIndex]} - ${this.description}`;
-    slideshow.appendChild(caption);
-  
-    const thumbnails = document.createElement('div');
-    thumbnails.style.display = 'flex';
-    thumbnails.style.justifyContent = 'center';
-    thumbnails.style.marginTop = '10px';
-    thumbnails.style.marginBottom = '20px';
-    popup.appendChild(thumbnails);
-  
-    this.images.forEach((image, index) => {
-      const thumbnail = document.createElement('img');
-      thumbnail.src = image;
-      thumbnail.style.width = '100px';
-      thumbnail.style.height = '75px';
-      thumbnail.style.objectFit = 'cover';
-      thumbnail.style.margin = '0 5px';
-      thumbnail.addEventListener('click', () => {
-        this.currentImageIndex = index;
-        img.src = image;
-        caption.innerText = this.captions[index];
-        counter.innerText = `${this.currentImageIndex + 1}/${this.images.length}`;
-      });
-      thumbnails.appendChild(thumbnail);
-    });
+  //old code
+  render() {
+    this.addToModal();
+    return html`
+        <div class="background" @click="${this.openPlaylist}">
+            <img src="${this.source}" alt="${this.altText}"></img>
+            <p class="caption">${this.caption}</p>
+        </div>
+    `;
+  }
+  //end old
 
-    const prevButton = document.createElement('button');
-    prevButton.style.position = 'absolute';
-    prevButton.style.top = '50%';
-    prevButton.style.left = '20px';
-    prevButton.style.background = 'black';
-    prevButton.style.border = 'none';
-    prevButton.style.fontSize = '24px';
-    prevButton.style.color = 'white';
-    prevButton.style.transform = 'translateY(-50%)';
-    prevButton.innerText = '<';
-    prevButton.addEventListener('click', () => {
-      this.currentImageIndex = (this.currentImageIndex - 1 + this.images.length) % this.images.length;
-      img.src = this.images[this.currentImageIndex];
-      caption.innerText = this.captions[this.currentImageIndex];
-      counter.innerText = `${this.currentImageIndex + 1}/${this.images.length}`;
-    });
-    popup.appendChild(prevButton);
-  
-    const nextButton = document.createElement('button');
-    nextButton.style.position = 'absolute';
-    nextButton.style.top = '50%';
-    nextButton.style.right = '20px';
-    nextButton.style.background = 'black';
-    nextButton.style.border = 'none';
-    nextButton.style.fontSize = '24px';
-    nextButton.style.color = 'white';
-    nextButton.style.transform = 'translateY(-50%)';
-    nextButton.innerText = '>';
-    nextButton.addEventListener('click', () => {
-      this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
-      img.src = this.images[this.currentImageIndex];
-      caption.innerText = this.captions[this.currentImageIndex];
-      counter.innerText = `${this.currentImageIndex + 1}/${this.images.length}`;
-    });
-    popup.appendChild(nextButton);
-  
-    const closeButton = document.createElement('button');
-    closeButton.style.position = 'fixed';
-    closeButton.style.top = '20px';
-    closeButton.style.right = '20px';
-    closeButton.style.background = 'black';
-    closeButton.style.border = 'none';
-    closeButton.style.color = 'white';
-    closeButton.style.fontSize = '24px';
-    closeButton.style.padding = '10px';
-    closeButton.innerText = 'X';
-    closeButton.addEventListener('click', () => {
-      popup.remove();
-    });
-    popup.appendChild(closeButton);
+  //new code
+  render() {
+    this.addToModal();
+    return html`
+        <div class="background" @click="${this.openPlaylist}">
+            <img src="${this.source}" alt="${this.altText}"></img>
+            <p class="caption">${this.caption}</p>
+        </div>
+    `;
+}
+//end new
+
+  static get properties() {
+    return {
+        source: { type: String, reflect: true },
+        caption: {type: String, reflect: true},
+        altText: { type: String, reflect: true, attribute: "alt-text" },
+        description: { type: String, reflect: true },
+        primary: { type: String, reflect: true },
+        secondary: { type: String, reflect: true },
+    };
   }
 }
 
-customElements.define(MediaImage.tag, MediaImage);
+globalThis.customElements.define(MediaImage.tag, MediaImage);

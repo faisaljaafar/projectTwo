@@ -43,67 +43,63 @@
 </body>
 
 </html>  -->
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>media-image</title>
-  <script type="module" src="src/media-image.js"></script>
-  <style>
-    /* Add some padding to the body to prevent the images from touching the edges of the screen */
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="Description" content="Boilerplate for polaris chip">
+    <base href="/">
+
+    <style>
+    :root,
+    html,
     body {
-      padding: 20px;
-      border: 5px solid black;
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
       background-color: grey;
+      color: white;
     }
-    .description {
-      margin-top: 10px;
-      font-style: italic;
-    }
+    /* polaris-chip {
+      margin: 16px;
+    } */
   </style>
-</head>
-<body>
-  <h1>media-image</h1>
-  <media-image source="images/beaver.png" caption="Beaver" description="This is a description of the beaver image"></media-image>
-  <p>this is where text goes too</p>
-  
-  <media-image source="images/oldMain.png" caption="oldMain" description="This is a description of the oldMain image"></media-image>
-  <p>text can go here too.</p>
-  <script>
-    // Define the MediaImageManager singleton
-    window.MediaImageManager = window.MediaImageManager || {};
-    window.MediaImageManager.instance = null;
-    window.MediaImageManager.requestAvailability = () => {
-      if (!window.MediaImageManager.instance) {
-        window.MediaImageManager.instance = document.createElement("media-image-manager");
-        document.body.appendChild(window.MediaImageManager.instance);
-      }
-      return window.MediaImageManager.instance;
-    };
+    <!-- <title>polaris-chip / my-card</title> -->
+  </head>
 
-    // Wait for all media-image elements to finish upgrading
-    const mediaImages = Array.from(document.querySelectorAll('media-image'));
-    Promise.all(mediaImages.map(img => customElements.whenDefined('media-image'))).then(() => {
-      // Get all media-image elements and add their sources and captions to the images and captions arrays
-      const images = mediaImages.map(img => img.source);
-      const captions = mediaImages.map(img => img.caption);
+  <body>
+    <h1>This is the beaver stadium!</h1>
+    <media-image source="https://www.psustadium.com/wp-content/uploads/2019/06/beaver-stadium-1024x576.jpg" 
+    caption="Beaver Stadium" 
+    description="This is purely to prove functionality."></media-image>
+    <p>Beaver Stadium located at Penn State University in State College, PA!</p>
+    <media-image
+      source="https://psu-gatsby-files-prod.s3.amazonaws.com/s3fs-public/styles/16_9_1000w/public/2023/04/old-main-blue-sky.jpg?h=08b866d1&itok=8NITFljZ"
+      caption="Old Main" description="This is the oldest building at PSU." primary="black"
+      secondary="red"></media-image>
+    <p>Old main is an old building.</p>
+    <media-image
+      source="https://kubrick.htvapps.com/htv-prod-media.s3.amazonaws.com/images/penn-state-logo-1596642604.jpg?crop=1.00xw:1.00xh;0,0&resize=1200:*"
+      caption="PSU Logo"
+      description="PSU PSU PSU"
+      primary="blue" secondary="black"></media-image>
+    <p>This is the PSU logo, so far this works.</p>
+    <media-image
+      source="https://bpb-us-e1.wpmucdn.com/sites.psu.edu/dist/4/13970/files/2014/08/19140880792_ebb3a98f5f_o-u2kfmz.jpg"
+      caption="Westgate BLDG" description="This is the westgate bldg."
+      primary="red" secondary="black"></media-image>
+    <p>This is where IST courses arew taken.</p>
+    <media-image
+    source="https://libraries.psu.edu/sites/default/files/4948439110_ecb488f562_z.jpg"
+    caption="Patee Paterno Library" description="Books, boredom, study"
+    primary="black" secondary="blue"></media-image>
+  <p>This is the library.</p>
 
-      // Set the images and captions properties of each media-image element to the images and captions arrays
-      mediaImages.forEach(img => {
-        img.images = images;
-        img.captions = captions;
-      });
+    <script type="module" src="./src/media-image.js"></script>
+    <script type="module" src="./src/play-list.js"></script>
+  </body>
 
-      // Get the first media-image element and set its source and caption to the first image and caption in the arrays
-      const firstImage = mediaImages[0];
-      firstImage.source = images[0];
-      firstImage.caption = captions[0];
-
-      // Log the images array after it has been populated
-      console.log('Page has loaded. Images:', images);
-    });
-  </script>
-</body>
 </html>
