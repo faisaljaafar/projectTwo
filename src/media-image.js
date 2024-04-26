@@ -88,18 +88,7 @@ export class MediaImage extends DDD {
     `;
   }
 
-//   openPlaylist() {
-//       const evt = new CustomEvent("toggle-play-list", {
-//         bubbles: true,
-//         composed: true,
-//         cancelable: true,
-//         detail: {
-//         opened: true,
-//         invokedBy: this.invokedBy,
-//       },
-//     });
-//     this.dispatchEvent(evt);
-//   }
+
 
 openPlaylist() {
     const evt = new CustomEvent("toggle-play-list", {
@@ -118,17 +107,6 @@ openPlaylist() {
 //such emptiness.
   }
 
-  //old code
-  render() {
-    this.addToModal();
-    return html`
-        <div class="background" @click="${this.openPlaylist}">
-            <img src="${this.source}" alt="${this.altText}"></img>
-            <p class="caption">${this.caption}</p>
-        </div>
-    `;
-  }
-  //end old
 
   //new code
   render() {

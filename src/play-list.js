@@ -21,17 +21,7 @@ export class PlayList extends DDD {
     //   });
   }
 
-  //old code
-//   togglePlaylist(e) {
-//     if (this.oppened) {
-//       this.oppened = false;
-//     } else {
-//       this.getCurrentImage(e);
-//       this.oppened = true;
-//     }
-//     this.requestUpdate();
-//   }
-  //end
+
 
   //new code
  togglePlaylist(e) {
@@ -56,18 +46,7 @@ export class PlayList extends DDD {
     this.getImages(); // Get images when component is connected to the DOM
   }
 
-  //OLD OLD OLD
-//   getImages(e) {
-//     this.mediaImages = document.querySelectorAll('media-image');
 
-//     var i = 0;
-//     this.mediaImages.forEach(element => {
-//       if (element == e.target) {
-//         this.currentIndex = i;
-//       }
-//       i = i + 1;
-//     });
-//   }
 
   //new code
   getImages() {
@@ -189,12 +168,7 @@ selectImage(e) {
      this.currentImage = this.mediaImages[this.currentIndex].cloneNode(true); // Clone with others
   }
 
-// getCurrentImage(e) {
-//     if (this.mediaImages && this.mediaImages[this.currentIndex]) {
-//       this.currentImage = this.mediaImages[this.currentIndex].cloneNode(true);
-//       this.requestUpdate();
-//     }
-//   }
+
 
   moveLeft() {
     if (this.mediaImages[this.currentIndex - 1]) {
@@ -212,12 +186,7 @@ selectImage(e) {
     }
   }
 
-  //old code
-//   selectImage(e) {
-//     this.currentIndex = Array.prototype.indexOf.call(this.mediaImages, e.target);
-//     this.currentImage = this.mediaImages[this.currentIndex].cloneNode(true);
-//     this.requestUpdate();
-//   }
+
 
 //NEW CODE
 selectImage(e) {
